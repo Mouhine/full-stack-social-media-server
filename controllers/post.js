@@ -158,7 +158,6 @@ const isLikedByMe = async (req, res) => {
   const { userId, postId } = req.body;
   try {
     const like = await Like.find({ userId: userId, postId: postId });
-    console.log(like[0]);
     if (like[0]) {
       return res.status(200).send({
         likedByMe: true,

@@ -91,7 +91,6 @@ const addToReadingList = async (req, res) => {
     const isFound = foundUser.reading_list.some(
       (element) => element.title === req.body.title
     );
-    console.log(isFound);
 
     if (isFound) {
       return res.status(200).json({
@@ -115,7 +114,6 @@ const addToReadingList = async (req, res) => {
 const deleteFromReadingList = async (req, res) => {
   console.log(req.params.userId);
   const foundUser = await User.find({ _id: req.params.userId }).exec();
-  console.log(foundUser.reading_list);
   if (!foundUser) {
     return res
       .status(204)
@@ -180,13 +178,11 @@ const followUser = async (req, res) => {
 };
 
 const unfollowUser = async (req, res) => {
-  console.log("unfollow user");
   const { id, followerId } = req.body;
   try {
     await Follower.deleteOne({ id: id });
     const foundUser = await User.findById(req.body.id);
     const idd = foundUser.followers.filter((f) => f !== req.body.followerId);
-    console.log(idd);
     foundUser.followers = idd;
     await foundUser.save();
     res.status(201).json({

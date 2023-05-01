@@ -3,7 +3,6 @@ const jwt = require("jsonwebtoken");
 
 const handleRefreshToken = async (req, res) => {
   const cookies = req.cookies;
-  console.log(cookies.jwt)
 
   if (!cookies?.jwt) return res.sendStatus(401);
   const refreshToken = cookies.jwt;
@@ -13,8 +12,7 @@ const handleRefreshToken = async (req, res) => {
     refreshToken,
     process.env.REFRESH_TOKEN_PRIVATE_KEY,
    async (err, decoded) => {
-      const foundUser = await User.find({firstName:decoded.firstName})
-    
+      const foundUser = await User.find({email:decoded.email})
       if (err)
         return res.sendStatus(403);
       // const roles = Object.values(foundUser.roles);

@@ -20,6 +20,7 @@ const getComments = async (req, res) => {
     });
   }
 };
+
 const addComment = async (req, res) => {
   const comment = req.body;
   try {
@@ -35,7 +36,7 @@ const addComment = async (req, res) => {
     });
   }
 };
-const updateComment = async (res, req) => {};
+
 const deletComment = async (req, res) => {
   const { id } = req.params;
   try {
@@ -51,6 +52,7 @@ const deletComment = async (req, res) => {
     });
   }
 };
+
 const likeComment = async (req, res) => {
   const { commentId, userId } = req.body;
   try {
