@@ -15,7 +15,6 @@ const handleRefreshToken = async (req, res) => {
       const foundUser = await User.find({email:decoded.email})
       if (err)
         return res.sendStatus(403);
-      // const roles = Object.values(foundUser.roles);
       const payload = {
         firstName: decoded.firstName,
         email: decoded.email,
