@@ -36,6 +36,7 @@ const register = async (req, res, next) => {
     }).save();
 
     res.cookie("jwt", refreshToken, {
+      httpOnly:true,
       maxAge: 24 * 60 * 60 * 1000,
     });
     res.status(201).json({
@@ -75,6 +76,7 @@ const login = async (req, res) => {
     const { accessToken, refreshToken } = await generateTokens(user);
     res.cookie("jwt", refreshToken, {
       maxAge: 24 * 60 * 60 * 1000,
+      httpOnly:true
     });
     res.status(200).json({
       error: false,
