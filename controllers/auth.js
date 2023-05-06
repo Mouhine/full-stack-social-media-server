@@ -35,12 +35,7 @@ const register = async (req, res, next) => {
       refreshToken: refreshToken,
     }).save();
 
-    res.cookie("jwt", refreshToken, {
-        httpOnly:true,
-      sameSite:true,
-      secure:true,
-      maxAge: 24 * 60 * 60 * 1000,
-    });
+    res.cookie("jwt", refreshToken, { httpOnly: true, sameSite: 'None', secure: true, maxAge: 24 * 60 * 60 * 1000 });
     res.status(201).json({
       error: false,
       message: "Account created sucessfully",
@@ -76,12 +71,7 @@ const login = async (req, res) => {
         .json({ error: true, message: "Invalid email or password" });
 
     const { accessToken, refreshToken } = await generateTokens(user);
-    res.cookie("jwt", refreshToken, {
-      maxAge: 24 * 60 * 60 * 1000,
-      httpOnly:true,
-      sameSite:true,
-      secure:true
-    });
+    res.cookie("jwt", refreshToken, { httpOnly: true, sameSite: 'None', secure: true, maxAge: 24 * 60 * 60 * 1000 });
     res.status(200).json({
       error: false,
       accessToken,

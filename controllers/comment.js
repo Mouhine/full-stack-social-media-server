@@ -54,22 +54,37 @@ const deletComment = async (req, res) => {
 };
 
 const likeComment = async (req, res) => {
-  const { commentId, userId } = req.body;
+  const {  id:userId } = req.body;
+  const {id} = req.params
+  console.log(id , userId)
   try {
-    const like = await Like.find({ commentId: commentId, userId: userId });
-    const foundComment = await Comment.findById(commentId);
-    if (like.length === 0) {
-      await Like.create({ userId, commentId });
+    const like = await Like.find({ commentId:id , userId});
+    const foundComment = await Comment.findById(id);
+    console.log(foundComment)
+    console.log(like[0])
+
+    if (like[0] === undefined) {
+      await Like.create({ commentId:id , userId });
       foundComment.likes++;
       foundComment.save();
-      res.status(201).send("liked comment successfully");
+      console.log(foundComment?.likes)
+      res.status(201).send("liked comment success fully");
+      return
     }
 
-    await Like.deleteOne({ userId: userId });
-    foundComment.likes--;
-    foundComment.save();
-    res.status(200).send("dislike comment successfully");
-  } catch (error) {}
+    if(like[0] !== undefined){
+       if(foundComment?.likes === 0){
+        return res.status(204)
+      }
+        await Like.deleteOne({ commentId:id , userId });
+        foundComment.likes--;
+        foundComment.save();
+        console.log(foundComment?.likes)
+        res.status(201).send("liked comment successfully");
+    }
+  } catch (error) {
+    console.log(error.message)
+  }
 };
 
 module.exports = {
