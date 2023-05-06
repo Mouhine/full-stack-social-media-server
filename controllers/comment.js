@@ -73,9 +73,6 @@ const likeComment = async (req, res) => {
     }
 
     if(like[0] !== undefined){
-       if(foundComment?.likes === 0){
-        return res.status(204)
-      }
         await Like.deleteOne({ commentId:id , userId });
         foundComment.likes--;
         foundComment.save();
